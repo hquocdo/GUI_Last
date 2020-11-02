@@ -5,11 +5,15 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using LattePanda.Firmata;
+using EsploraPulse.Model;
 
 namespace GUI_Last
 {
     public class ECG
     {
+        public readonly PulseData data;
+        public readonly PulseCalculator controller;
+
         public int SAMPLERATE = 8000;
         int bufferIndex = 0;
         int buffersCaptured = 0;
@@ -29,6 +33,8 @@ namespace GUI_Last
         public ECG()
         {
             Console.WriteLine("Start Listening");
+            this.data = new PulseData();
+            this.controller = new PulseCalculator(ref this.data);
             arduino.analogPinUpdated += Arduino_analogPinUpdated;
         }
         public double[] GetFilteredValues()
@@ -119,7 +125,7 @@ namespace GUI_Last
         public int lastPointUpdated = 0;
         private void Arduino_analogPinUpdated(int pin, int value)
         {
-            if(pin == 0)
+            if(pin == 1)
             {
                 for(int i=0; i < valuesInBuffer; i++)
                 {
@@ -153,14 +159,24 @@ namespace GUI_Last
 
                 Array.Copy(bufferValues, 0, values, bufferIndex * valuesInBuffer, bufferValues.Length);
                 lastPointUpdated = bufferIndex * valuesInBuffer + bufferValues.Length;
-
                 buffersCaptured += 1;
                 bufferIndex += 1;
 
                 if (bufferIndex * valuesInBuffer > values.Length - 1)
                     bufferIndex = 0;
             }
-            
+            if (pin == 0)
+            {
+                try
+                {
+                    this.data.Signal = value;
+                    this.controller.CalculatePulse();
+                }
+                catch (Exception exception)
+                {
+
+                }
+            }
         }
         public string GetCSV()
         {
