@@ -30,14 +30,22 @@ namespace GUI_Last
         private void StartListening()
         {
             ecg = new ECG();
-            while (ecg.values == null)
+            while (ecg.values == null && ecg.ppg_values == null)
                 System.Threading.Thread.Sleep(10);
 
             scottPlotUC1.plt.Clear();
+            scottPlotUC2.plt.Clear();
+
+            scottPlotUC2.plt.PlotSignal(ecg.ppg_values, ecg.SAMPLERATE, color: ColorTranslator.FromHtml("#d62728"));
             scottPlotUC1.plt.PlotSignal(ecg.values, ecg.SAMPLERATE, color: ColorTranslator.FromHtml("#d62728"));
+            
             scottPlotUC1.plt.AxisAuto();
+            scottPlotUC2.plt.AxisAuto();
             scottPlotUC1.plt.Axis(y1: -Math.Pow(2, 16) / 2, y2: Math.Pow(2, 16) / 2);
+
             scottPlotUC1.Render();
+            scottPlotUC2.Render();
+            
             timerRenderGraph.Enabled = true;
             timerMqttPublish.Enabled = true;
         }
@@ -67,8 +75,7 @@ namespace GUI_Last
         }
         bool busyRendering = false;
         bool useLowpassFilter = false;
-   
-
+     
         #endregion
 
         private void lblBPM_Click(object sender, EventArgs e)
@@ -83,7 +90,7 @@ namespace GUI_Last
 
             busyRendering = true;
 
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke((MethodInvoker) delegate
             {
                 //Console.WriteLine(this.ecg.data.BPM);
                 this.lblBPM.Text = this.ecg.data.BPM.ToString();
@@ -92,16 +99,27 @@ namespace GUI_Last
             if (useLowpassFilter)
             {
                 scottPlotUC1.plt.Clear();
-                scottPlotUC1.plt.PlotSignal(ecg.GetFilteredValues(), ecg.SAMPLERATE);
+                scottPlotUC1.plt.PlotSignal(ecg.GetFilteredValues(ecg.values,ecg.lastPointUpdated), ecg.SAMPLERATE);
                 scottPlotUC1.Render();
+
+                scottPlotUC2.plt.Clear();
+                scottPlotUC2.plt.PlotSignal(ecg.GetFilteredValues(ecg.ppg_values, ecg.lastPPGUpdated), ecg.SAMPLERATE);
+                scottPlotUC2.Render();
+
             }
             else
             {
                 scottPlotUC1.plt.Clear(signalPlots: false);
+                scottPlotUC2.plt.Clear(signalPlots: false);
+
                 scottPlotUC1.plt.PlotVLine((double)ecg.lastPointUpdated / ecg.SAMPLERATE, color: ColorTranslator.FromHtml("#636363"));
+                scottPlotUC2.plt.PlotVLine((double)ecg.lastPPGUpdated / ecg.SAMPLERATE, color: ColorTranslator.FromHtml("#636363"));
+
                 if (displayHeartbeats)
                     scottPlotUC1.plt.PlotHLine(ecg.beatThreshold);
+
                 scottPlotUC1.Render();
+                scottPlotUC2.Render();
             }
             //scottPlotUC2.plt.PlotSignal(ecg.data.SampleCounter, ecg.data.Signal);
             Application.DoEvents();

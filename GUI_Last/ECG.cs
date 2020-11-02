@@ -14,13 +14,15 @@ namespace GUI_Last
         public readonly PulseData data;
         public readonly PulseCalculator controller;
 
-        public int SAMPLERATE = 8000;
+        public int SAMPLERATE = 8600;
         int bufferIndex = 0;
+        int PPGIndex = 0;
         int buffersCaptured = 0;
         int STORESECONDS = 5;
         public int beatThreshold = 3500;
         static int valuesInBuffer = 160;
         double[] bufferValues = new double[valuesInBuffer];
+        double[] bufferPPG = new double[valuesInBuffer];
 
         public List<double> beatTimes = new List<double>();
         public List<double> beatRates = new List<double>();
@@ -28,6 +30,7 @@ namespace GUI_Last
         Arduino arduino = new Arduino();
 
         public double[] values;
+        public double[] ppg_values;
         public double[] times;
 
         public ECG()
@@ -37,13 +40,13 @@ namespace GUI_Last
             this.controller = new PulseCalculator(ref this.data);
             arduino.analogPinUpdated += Arduino_analogPinUpdated;
         }
-        public double[] GetFilteredValues()
+        public double[] GetFilteredValues(double[] buffer, int lastPointUpdated)
         {
-            double[] chrono = new double[values.Length];
+            double[] chrono = new double[buffer.Length];
             for (int i = 0; i < lastPointUpdated; i++)
-                chrono[values.Length - lastPointUpdated + i] = values[i];
-            for (int i = lastPointUpdated; i < values.Length; i++)
-                chrono[i - lastPointUpdated] = values[i];
+                chrono[buffer.Length - lastPointUpdated + i] = buffer[i];
+            for (int i = lastPointUpdated; i < buffer.Length; i++)
+                chrono[i - lastPointUpdated] = buffer[i];
             chrono = LowPassFilter(chrono);
 
             return chrono;
@@ -97,8 +100,6 @@ namespace GUI_Last
             for (int i = 0; i < fft_size; i++) pcm[i] = complex[i].Real;
 
             return pcm;
-
-
         }
 
         private void BeatDetected(double timeSec)
@@ -123,6 +124,7 @@ namespace GUI_Last
         }
 
         public int lastPointUpdated = 0;
+        public int lastPPGUpdated = 0;
         private void Arduino_analogPinUpdated(int pin, int value)
         {
             if(pin == 1)
@@ -167,6 +169,25 @@ namespace GUI_Last
             }
             if (pin == 0)
             {
+                for(int j=0; j < valuesInBuffer; j++)
+                {
+                    bufferPPG[j] = value;
+                }
+
+                if(ppg_values == null)
+                {
+                    int idealSample = STORESECONDS * SAMPLERATE;
+                    int bufferSize = idealSample / valuesInBuffer;
+                    ppg_values = new double[bufferSize * valuesInBuffer];
+                }
+
+                Array.Copy(bufferPPG, 0, ppg_values, PPGIndex * valuesInBuffer, bufferPPG.Length);
+                lastPPGUpdated = PPGIndex * valuesInBuffer + bufferPPG.Length;
+                PPGIndex += 1;
+
+                if (PPGIndex * valuesInBuffer > ppg_values.Length - 1)
+                    PPGIndex = 0;
+
                 try
                 {
                     this.data.Signal = value;
