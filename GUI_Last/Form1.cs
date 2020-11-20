@@ -128,7 +128,8 @@ namespace GUI_Last
 
         private void timerMqttPublish_Tick(object sender, EventArgs e)
         {
-            ushort msgId = client.Publish("mqtt1/BPM", Encoding.UTF8.GetBytes(this.ecg.data.BPM.ToString()), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+            string data = this.ecg.data.BPM + "-" + this.ecg.spo2;
+            ushort msgId = client.Publish("mqtt1/BPM", Encoding.UTF8.GetBytes(data), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
 
         }
 

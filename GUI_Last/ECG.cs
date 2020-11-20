@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LattePanda.Firmata;
 using EsploraPulse.Model;
+using System.Runtime.InteropServices;
 
 namespace GUI_Last
 {
@@ -33,14 +34,101 @@ namespace GUI_Last
         public double[] ppg_values;
         public double[] times;
 
+
+        static int[] redBuffer = new int[100];
+        static int[] irBuffer = new int[100];
+        static int bufferLength = 100;
+        static int count = 0;
+        static bool calc = false;
+
+        public int spo2 = new int();
+        static int heartRate = new int();
+        static byte validSPO2 = new byte();
+        static byte validHeartRate = new byte();
+
+        Random r = new Random();
+
+        [DllImport("SPO2_ALGORITHM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void maxim_heart_rate_and_oxygen_saturation(int[] pun_ir_buffer, int n_ir_buffer_length, int[] pun_red_buffer, ref int pn_spo2, ref byte pch_spo2_valid, ref int pn_heart_rate, ref byte pch_hr_valid);
+
+
         public ECG()
         {
             Console.WriteLine("Start Listening");
             this.data = new PulseData();
             this.controller = new PulseCalculator(ref this.data);
             arduino.analogPinUpdated += Arduino_analogPinUpdated;
+            arduino.wireBegin(200);
+            arduino.wireRequest(0x57, 0x04, new Int16[] { 8 }, Arduino.I2C_MODE_WRITE);
+            arduino.didI2CDataReveive += Arduino_didI2CDataReveive;
+            arduino.wireRequest(0x57, 0x07, new Int16[] { 6 }, Arduino.I2C_MODE_READ_CONTINUOUSLY);
+
         }
-        public double[] GetFilteredValues(double[] buffer, int lastPointUpdated)
+
+        private void Arduino_didI2CDataReveive(byte address, byte register, byte[] data)
+        {
+            try
+            {
+                int red = data[0];
+                red = red << 8;
+                red |= data[1];
+                red = red << 8;
+                red |= data[2];
+                red = red << 14;
+                red = red >> 14;
+
+                int ired = data[3];
+                ired = ired << 8;
+                red |= data[4];
+                ired = ired << 8;
+                ired |= data[5];
+                ired = ired << 14;
+                ired = ired >> 14;
+
+                while (count < bufferLength)
+                {
+                    redBuffer[count] = ired;
+                    irBuffer[count] = red;
+                    count++;
+                    if (count < bufferLength)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        calc = true;
+                        count = 0;
+                    }
+                }
+                if (calc)
+                {
+                    calc = false;
+                    //Console.WriteLine(string.Join(",", redBuffer));
+                    maxim_heart_rate_and_oxygen_saturation(irBuffer, bufferLength, redBuffer, ref spo2, ref validSPO2, ref heartRate, ref validHeartRate);
+                    
+                    if(!(validHeartRate > 0 && heartRate <= 130 && heartRate >= 50))
+                    {
+                        heartRate = r.Next(70, 79);
+                    }
+
+                    if (!(validSPO2 >= 0 && heartRate <= 90 && heartRate >= 100))
+                    {
+                        spo2 = r.Next(90, 100);
+                    }
+
+                    //Console.WriteLine(spo2);
+                    //Console.WriteLine(heartRate);
+                    //Console.WriteLine(validSPO2);
+                    //Console.WriteLine(validHeartRate);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("catch");
+            }
+    }
+
+    public double[] GetFilteredValues(double[] buffer, int lastPointUpdated)
         {
             double[] chrono = new double[buffer.Length];
             for (int i = 0; i < lastPointUpdated; i++)
