@@ -120,7 +120,39 @@
                     android:textSize="20dp"
                     android:textStyle="bold" />
                 <TextView
-                    android:id="@+id/test"
+                    android:id="@+id/testBPM"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:background="@drawable/textlines"
+                    android:text="test"
+                    android:textAlignment="center"
+                    android:textColor="#ffffffff"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/SPO2show"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:background="@drawable/textlines"
+                    android:text="SPO2"
+                    android:textAlignment="center"
+                    android:textColor="#ffffffff"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/testSPO2"
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
@@ -138,7 +170,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_margin="5dp"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/graphSPO2"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_margin="5dp"
+                android:visibility="visible"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

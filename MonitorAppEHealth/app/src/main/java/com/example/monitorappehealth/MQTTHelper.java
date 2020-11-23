@@ -45,13 +45,13 @@ public class MQTTHelper {
 
             }
         });
-        connect();
+        //connect();
     }
 
     public void setCallback(MqttCallbackExtended callback){
         mqttAndroidClient.setCallback(callback);
     }
-    private void connect(){
+    public void connect(){
         final MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setAutomaticReconnect(true);
         mqttConnectOptions.setCleanSession(false);
