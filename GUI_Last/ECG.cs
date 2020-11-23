@@ -34,7 +34,6 @@ namespace GUI_Last
         public double[] ppg_values;
         public double[] times;
 
-
         static int[] redBuffer = new int[100];
         static int[] irBuffer = new int[100];
         static int bufferLength = 100;
@@ -54,10 +53,12 @@ namespace GUI_Last
 
         public ECG()
         {
+            arduino.digitalWrite(9, Arduino.LOW);
             Console.WriteLine("Start Listening");
             this.data = new PulseData();
             this.controller = new PulseCalculator(ref this.data);
             arduino.analogPinUpdated += Arduino_analogPinUpdated;
+            arduino.pinMode(9, Arduino.OUTPUT);
             arduino.wireBegin(200);
             arduino.wireRequest(0x57, 0x04, new Int16[] { 8 }, Arduino.I2C_MODE_WRITE);
             arduino.didI2CDataReveive += Arduino_didI2CDataReveive;
@@ -293,6 +294,17 @@ namespace GUI_Last
             for (int i = 0; i < beatTimes.Count; i++)
                 csv += $"{i + 1}, {Math.Round(beatTimes[i], 3)},{Math.Round(beatTimes[i], 3)}\n";
             return csv;
+        }
+        public void checkMQTT(bool checkMQTT)
+        {
+            if (checkMQTT)
+            {
+                arduino.digitalWrite(9, Arduino.HIGH);
+            }
+            else
+            {
+                arduino.digitalWrite(9, Arduino.LOW);
+            }
         }
     }
 }

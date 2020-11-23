@@ -16,20 +16,30 @@ namespace GUI_Last
 {
     public partial class Lattepanda_Ehealth : Form
     {
-        private ECG ecg;
+        private ECG ecg = new ECG();
+        private bool checkConnect = false;
         MqttClient client = new MqttClient("13.229.69.47");
         public Lattepanda_Ehealth()
         {
             InitializeComponent();
-            client.ProtocolVersion = MqttProtocolVersion.Version_3_1_1;
-            byte code = client.Connect(Guid.NewGuid().ToString(), "hquocdo", "hung11898");
-            client.MqttMsgPublished += Client_MqttMsgPublished;
+            try
+            {
+                this.ecg.checkMQTT(false);
+                client.ProtocolVersion = MqttProtocolVersion.Version_3_1_1;
+                byte code = client.Connect(Guid.NewGuid().ToString(), "hquocdo", "hung11898");
+                client.MqttMsgPublished += Client_MqttMsgPublished;
+                client.ConnectionClosed += Client_ConnectionClosed;
+            }
+            catch(Exception e)
+            {
+                this.ecg.checkMQTT(true);
+            }
             StyleGraphs();
         }
 
         private void StartListening()
         {
-            ecg = new ECG();
+            //ecg = new ECG();
             while (ecg.values == null && ecg.ppg_values == null)
                 System.Threading.Thread.Sleep(10);
 
@@ -129,14 +139,37 @@ namespace GUI_Last
         private void timerMqttPublish_Tick(object sender, EventArgs e)
         {
             string data = this.ecg.data.BPM + "-" + this.ecg.spo2;
+            
             ushort msgId = client.Publish("mqtt1/BPM", Encoding.UTF8.GetBytes(data), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
-
         }
 
         private void Client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
         {
             Console.WriteLine("MessageId = " + e.MessageId + " Published = " + e.IsPublished);
             
+        }
+        private void Client_ConnectionClosed(object sender, EventArgs e)
+        {
+            this.ecg.checkMQTT(true);
+            checkConnect = true;
+        }
+
+        private void AutoConnect_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine("123");
+            if (checkConnect)
+            {
+                try
+                {
+                    checkConnect = false;
+                    byte code = client.Connect(Guid.NewGuid().ToString(), "hquocdo", "hung11898");
+                    this.ecg.checkMQTT(false);
+                }
+                catch (Exception exce)
+                {
+                    checkConnect = true;
+                }
+            }
         }
     }
 }

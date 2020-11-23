@@ -36,6 +36,7 @@
             this.lblBPM = new System.Windows.Forms.Label();
             this.timerRenderGraph = new System.Windows.Forms.Timer(this.components);
             this.timerMqttPublish = new System.Windows.Forms.Timer(this.components);
+            this.AutoConnect = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -110,6 +111,12 @@
             this.timerMqttPublish.Interval = 1000;
             this.timerMqttPublish.Tick += new System.EventHandler(this.timerMqttPublish_Tick);
             // 
+            // AutoConnect
+            // 
+            this.AutoConnect.Enabled = true;
+            this.AutoConnect.Interval = 10000;
+            this.AutoConnect.Tick += new System.EventHandler(this.AutoConnect_Tick);
+            // 
             // Lattepanda_Ehealth
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -133,6 +140,7 @@
         private System.Windows.Forms.Label lblBPM;
         private System.Windows.Forms.Timer timerRenderGraph;
         private System.Windows.Forms.Timer timerMqttPublish;
+        private System.Windows.Forms.Timer AutoConnect;
     }
 }
 
