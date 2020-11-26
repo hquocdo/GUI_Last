@@ -103,7 +103,8 @@ namespace GUI_Last
             BeginInvoke((MethodInvoker) delegate
             {
                 //Console.WriteLine(this.ecg.data.BPM);
-                this.lblBPM.Text = this.ecg.data.BPM.ToString();
+                this.lblBPM.Text = string.Format("{0:0.0} BPM", ecg.data.BPM);
+                this.lblSPO2.Text = string.Format("{0:0} %", ecg.spo2);
             });
 
             if (useLowpassFilter)
@@ -140,7 +141,7 @@ namespace GUI_Last
         {
             string data = this.ecg.data.BPM + "-" + this.ecg.spo2;
             
-            ushort msgId = client.Publish("mqtt1/BPM", Encoding.UTF8.GetBytes(data), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+            ushort msgId = client.Publish("mqtt1", Encoding.UTF8.GetBytes(data), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
         }
 
         private void Client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
