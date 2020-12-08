@@ -18,7 +18,7 @@ namespace GUI_Last
     {
         private ECG ecg = new ECG();
         private bool checkConnect = false;
-        MqttClient client = new MqttClient("13.229.69.47");
+        MqttClient client = new MqttClient("13.229.80.211");
         public Lattepanda_Ehealth()
         {
             InitializeComponent();
@@ -28,7 +28,7 @@ namespace GUI_Last
                 client.ProtocolVersion = MqttProtocolVersion.Version_3_1_1;
                 byte code = client.Connect(Guid.NewGuid().ToString(), "hquocdo", "hung11898");
                 client.MqttMsgPublished += Client_MqttMsgPublished;
-                client.ConnectionClosed += Client_ConnectionClosed;
+                //client.ConnectionClosed += Client_ConnectionClosed;
             }
             catch(Exception e)
             {
@@ -98,14 +98,7 @@ namespace GUI_Last
             if (busyRendering)
                 return;
 
-            busyRendering = true;
-
-            BeginInvoke((MethodInvoker) delegate
-            {
-                //Console.WriteLine(this.ecg.data.BPM);
-                this.lblBPM.Text = string.Format("{0:0.0} BPM", ecg.data.BPM);
-                this.lblSPO2.Text = string.Format("{0:0} %", ecg.spo2);
-            });
+            busyRendering = false;
 
             if (useLowpassFilter)
             {
@@ -133,15 +126,19 @@ namespace GUI_Last
                 scottPlotUC2.Render();
             }
             //scottPlotUC2.plt.PlotSignal(ecg.data.SampleCounter, ecg.data.Signal);
-            Application.DoEvents();
+            //Application.DoEvents();
             busyRendering = false;
         }
+
+
 
         private void timerMqttPublish_Tick(object sender, EventArgs e)
         {
             string data = this.ecg.data.BPM + "-" + this.ecg.spo2;
             
             ushort msgId = client.Publish("mqtt1", Encoding.UTF8.GetBytes(data), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
+            lblBPM.Text = ecg.data.BPM + " BPM";
+            lblSPO2.Text = ecg.spo2 + " %";
         }
 
         private void Client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
@@ -157,7 +154,6 @@ namespace GUI_Last
 
         private void AutoConnect_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine("123");
             if (checkConnect)
             {
                 try

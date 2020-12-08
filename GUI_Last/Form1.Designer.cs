@@ -43,7 +43,7 @@
             // 
             // timerRenderGraph
             // 
-            this.timerRenderGraph.Interval = 10;
+            this.timerRenderGraph.Interval = 20;
             this.timerRenderGraph.Tick += new System.EventHandler(this.timerRenderGraph_Tick);
             // 
             // timerMqttPublish
@@ -61,7 +61,7 @@
             // 
             this.lblBPM.AutoSize = true;
             this.lblBPM.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblBPM.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblBPM.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.lblBPM.Location = new System.Drawing.Point(3, 151);
             this.lblBPM.Name = "lblBPM";
             this.lblBPM.Size = new System.Drawing.Size(119, 30);
@@ -73,7 +73,7 @@
             // 
             this.lblSPO2.AutoSize = true;
             this.lblSPO2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblSPO2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSPO2.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSPO2.Location = new System.Drawing.Point(3, 181);
             this.lblSPO2.Name = "lblSPO2";
             this.lblSPO2.Size = new System.Drawing.Size(119, 30);
