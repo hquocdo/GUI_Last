@@ -49,19 +49,19 @@ namespace GUI_Last
             scottPlotUC2.plt.PlotSignal(ecg.ppg_values, ecg.SAMPLERATE, color: ColorTranslator.FromHtml("#d62728"));
             scottPlotUC1.plt.PlotSignal(ecg.values, ecg.SAMPLERATE, color: ColorTranslator.FromHtml("#d62728"));
             
-            scottPlotUC1.plt.AxisAuto();
-            scottPlotUC2.plt.AxisAuto();
-            scottPlotUC1.plt.Axis(y1: -Math.Pow(2, 16) / 2, y2: Math.Pow(2, 16) / 2);
+            //scottPlotUC1.plt.AxisAuto();
+            //scottPlotUC2.plt.AxisAuto();
+            //scottPlotUC1.plt.Axis(y1: -Math.Pow(2, 16) / 2, y2: Math.Pow(2, 16) / 2);
 
-            scottPlotUC1.Render();
-            scottPlotUC2.Render();
+            //scottPlotUC1.Render();
+            //scottPlotUC2.Render();
             
             timerRenderGraph.Enabled = true;
             timerMqttPublish.Enabled = true;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            StartListening();
+            //StartListening();
         }
         #region graphing
         private void StyleGraphs()
