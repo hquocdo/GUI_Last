@@ -61,7 +61,7 @@ namespace GUI_Last
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            //StartListening();
+            
         }
         #region graphing
         private void StyleGraphs()
@@ -139,6 +139,8 @@ namespace GUI_Last
             ushort msgId = client.Publish("mqtt1", Encoding.UTF8.GetBytes(data), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
             lblBPM.Text = ecg.data.BPM + " BPM";
             lblSPO2.Text = ecg.spo2 + " %";
+            lblTemp.Text = string.Format("{0:0.0}°C", ecg.body_temp);
+
         }
 
         private void Client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
@@ -167,6 +169,16 @@ namespace GUI_Last
                     checkConnect = true;
                 }
             }
+        }
+
+        private void startToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StartListening();
+        }
+
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
