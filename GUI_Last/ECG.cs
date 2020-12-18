@@ -47,6 +47,8 @@ namespace GUI_Last
 
         Random r = new Random();
 
+        public double body_temp = new double();
+
         [DllImport("SPO2_ALGORITHM.dll", CallingConvention = CallingConvention.Cdecl)]
         public extern static void maxim_heart_rate_and_oxygen_saturation(int[] pun_ir_buffer, int n_ir_buffer_length, int[] pun_red_buffer, ref int pn_spo2, ref byte pch_spo2_valid, ref int pn_heart_rate, ref byte pch_hr_valid);
 
@@ -286,6 +288,13 @@ namespace GUI_Last
                 {
 
                 }
+            }
+            if(pin == 2)
+            {
+                float mv = (value / 1024) * 5;
+                float celcius = mv / 10;
+                body_temp = (celcius * 9 / 5) + 32;
+                Console.WriteLine(body_temp);
             }
         }
         public string GetCSV()
