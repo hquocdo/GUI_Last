@@ -49,12 +49,6 @@ namespace GUI_Last
             scottPlotUC2.plt.PlotSignal(ecg.ppg_values, ecg.SAMPLERATE, color: ColorTranslator.FromHtml("#d62728"));
             scottPlotUC1.plt.PlotSignal(ecg.values, ecg.SAMPLERATE, color: ColorTranslator.FromHtml("#d62728"));
             
-            //scottPlotUC1.plt.AxisAuto();
-            //scottPlotUC2.plt.AxisAuto();
-            //scottPlotUC1.plt.Axis(y1: -Math.Pow(2, 16) / 2, y2: Math.Pow(2, 16) / 2);
-
-            //scottPlotUC1.Render();
-            //scottPlotUC2.Render();
             
             timerRenderGraph.Enabled = true;
             timerMqttPublish.Enabled = true;
@@ -133,7 +127,6 @@ namespace GUI_Last
                 scottPlotUC3.plt.AxisAuto();
                 scottPlotUC3.Render();
             }
-            //scottPlotUC2.plt.PlotSignal(ecg.data.SampleCounter, ecg.data.Signal);
             busyRendering = false;
         }
 
@@ -208,7 +201,7 @@ namespace GUI_Last
             {
                 string saveFilePath = savefile.FileName;
                 scottPlotUC1.plt.SaveFig(saveFilePath);
-                scottPlotUC2.plt.SaveFig(saveFilePath);
+                //scottPlotUC2.plt.SaveFig(saveFilePath);
             }
         }
 
@@ -229,6 +222,13 @@ namespace GUI_Last
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StartListening();
+        }
+
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            timerRenderGraph.Enabled = false;
+            timerMqttPublish.Enabled = false;
+
         }
     }
 }
