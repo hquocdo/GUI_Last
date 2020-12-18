@@ -47,6 +47,13 @@
             this.lblBPM = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.fullScaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoscalemiddleclickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panLeftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -150,12 +157,21 @@
             // 
             // graphToolStripMenuItem
             // 
+            this.graphToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fullScaleToolStripMenuItem,
+            this.autoscalemiddleclickToolStripMenuItem,
+            this.panLeftToolStripMenuItem,
+            this.zoomToolStripMenuItem,
+            this.saveImageToolStripMenuItem});
             this.graphToolStripMenuItem.Name = "graphToolStripMenuItem";
             this.graphToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.graphToolStripMenuItem.Text = "Graph";
             // 
             // heartbeatDetectionToolStripMenuItem
             // 
+            this.heartbeatDetectionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearToolStripMenuItem,
+            this.saveCSVToolStripMenuItem});
             this.heartbeatDetectionToolStripMenuItem.Name = "heartbeatDetectionToolStripMenuItem";
             this.heartbeatDetectionToolStripMenuItem.Size = new System.Drawing.Size(125, 20);
             this.heartbeatDetectionToolStripMenuItem.Text = "Heartbeat Detection";
@@ -225,6 +241,50 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // fullScaleToolStripMenuItem
+            // 
+            this.fullScaleToolStripMenuItem.Name = "fullScaleToolStripMenuItem";
+            this.fullScaleToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.fullScaleToolStripMenuItem.Text = "Full Scale";
+            // 
+            // autoscalemiddleclickToolStripMenuItem
+            // 
+            this.autoscalemiddleclickToolStripMenuItem.Name = "autoscalemiddleclickToolStripMenuItem";
+            this.autoscalemiddleclickToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.autoscalemiddleclickToolStripMenuItem.Text = "Auto-scale (middle-click)";
+            // 
+            // panLeftToolStripMenuItem
+            // 
+            this.panLeftToolStripMenuItem.Enabled = false;
+            this.panLeftToolStripMenuItem.Name = "panLeftToolStripMenuItem";
+            this.panLeftToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.panLeftToolStripMenuItem.Text = "Pan (left-click-drag)";
+            // 
+            // zoomToolStripMenuItem
+            // 
+            this.zoomToolStripMenuItem.Enabled = false;
+            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.zoomToolStripMenuItem.Text = "Zoom (right-click-drag)";
+            // 
+            // saveImageToolStripMenuItem
+            // 
+            this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
+            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.saveImageToolStripMenuItem.Text = "Save Image";
+            // 
+            // clearToolStripMenuItem
+            // 
+            this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearToolStripMenuItem.Text = "Clear";
+            // 
+            // saveCSVToolStripMenuItem
+            // 
+            this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
+            this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveCSVToolStripMenuItem.Text = "Save CSV";
+            // 
             // Lattepanda_Ehealth
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -264,6 +324,13 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label lblSPO2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripMenuItem fullScaleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem autoscalemiddleclickToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem panLeftToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveImageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveCSVToolStripMenuItem;
     }
 }
 
