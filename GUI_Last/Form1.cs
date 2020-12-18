@@ -126,7 +126,6 @@ namespace GUI_Last
                 scottPlotUC2.Render();
             }
             //scottPlotUC2.plt.PlotSignal(ecg.data.SampleCounter, ecg.data.Signal);
-            //Application.DoEvents();
             busyRendering = false;
         }
 
@@ -171,14 +170,57 @@ namespace GUI_Last
             }
         }
 
+        private void fullScaleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            scottPlotUC1.plt.AxisAuto();
+            scottPlotUC1.plt.Axis(y1: -Math.Pow(2, 16) / 2, y2: Math.Pow(2, 16) / 2);
+            scottPlotUC1.Render();
+
+            scottPlotUC2.plt.AxisAuto();
+            scottPlotUC2.plt.Axis(y1: -Math.Pow(2, 16) / 2, y2: Math.Pow(2, 16) / 2);
+            scottPlotUC2.Render();
+        }
+
+        private void autoscalemiddleclickToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            scottPlotUC1.plt.AxisAuto();
+            scottPlotUC1.Render();
+
+            scottPlotUC2.plt.AxisAuto();
+            scottPlotUC2.Render();
+
+        }
+
+        private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog savefile = new SaveFileDialog();
+            savefile.FileName = "Sound Card ECG.png";
+            savefile.Filter = "PNG Files (*.png)|*.png|All files (*.*)|*.*";
+            if (savefile.ShowDialog() == DialogResult.OK)
+            {
+                string saveFilePath = savefile.FileName;
+                scottPlotUC1.plt.SaveFig(saveFilePath);
+                scottPlotUC2.plt.SaveFig(saveFilePath);
+            }
+        }
+
+        private void saveCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog savefile = new SaveFileDialog();
+            savefile.FileName = "Sound Card ECG.csv";
+            savefile.Filter = "CSV Files (*.csv)|*.csv|All files (*.*)|*.*";
+            if (savefile.ShowDialog() == DialogResult.OK)
+                System.IO.File.WriteAllText(savefile.FileName, ecg.GetCSV());
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StartListening();
-        }
-
-        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
         }
     }
 }
