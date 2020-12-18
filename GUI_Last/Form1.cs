@@ -77,9 +77,9 @@ namespace GUI_Last
             scottPlotUC2.Render();
             
 
-            scottPlotUC3.plt.YLabel("Signal (PCM)");
+            scottPlotUC3.plt.YLabel("Heart Rate(BPM)");
             scottPlotUC3.plt.XLabel("Time (Seconds)");
-            scottPlotUC3.plt.Title("SP02 Value");
+            scottPlotUC3.plt.Title("Heart Beat Detection");
             scottPlotUC3.Render();
             
         }
@@ -124,6 +124,14 @@ namespace GUI_Last
 
                 scottPlotUC1.Render();
                 scottPlotUC2.Render();
+            }
+
+            if (ecg.beatTimes != null && ecg.beatTimes.Count > 0)
+            {
+                scottPlotUC3.plt.Clear();
+                scottPlotUC3.plt.PlotScatter(ecg.beatTimes.ToArray(), ecg.beatRates.ToArray());
+                scottPlotUC3.plt.AxisAuto();
+                scottPlotUC3.Render();
             }
             //scottPlotUC2.plt.PlotSignal(ecg.data.SampleCounter, ecg.data.Signal);
             busyRendering = false;
