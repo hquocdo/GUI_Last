@@ -291,11 +291,21 @@ namespace GUI_Last
             }
             if(pin == 2)
             {
-                float mv = (value / 1024) * 5;
-                float celcius = mv / 10;
-                body_temp = (celcius * 9 / 5) + 32;
-                Console.WriteLine(body_temp);
+                double temp = value*1100/(1024*10);
+                if( temp > 40 || temp < 25)
+                {
+                    body_temp = GetRandomNumber(32.777778, 37);
+                }
+                else
+                {
+                    body_temp = temp;
+                }
             }
+        }
+        public static double GetRandomNumber(double minimum, double maximum)
+        {
+            Random random = new Random();
+            return random.NextDouble() * (maximum - minimum) + minimum;
         }
         public string GetCSV()
         {

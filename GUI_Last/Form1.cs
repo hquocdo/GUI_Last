@@ -124,7 +124,7 @@ namespace GUI_Last
             {
                 scottPlotUC3.plt.Clear();
                 scottPlotUC3.plt.PlotScatter(ecg.beatTimes.ToArray(), ecg.beatRates.ToArray());
-                scottPlotUC3.plt.AxisAuto();
+                //scottPlotUC3.plt.AxisAuto();
                 scottPlotUC3.Render();
             }
             busyRendering = false;
