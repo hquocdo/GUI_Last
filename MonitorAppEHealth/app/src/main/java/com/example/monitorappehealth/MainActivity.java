@@ -86,10 +86,6 @@ public class MainActivity extends AppCompatActivity {
 							graphSPO2.removeAllSeries();
 							initialSeries();
 						}
-//                            String group1, group2, group3;
-//                            group1 = m.group(1) == null ? "0" : m.group(1);
-//                            group2 = m.group(2) == null ? "0" : m.group(2);
-//                            group3 = m.group(3) == null ? "0" : m.group(3);
 
 						showFieldBPM.setText(m.group(1));
 						showFieldSPO2.setText(m.group(2));
@@ -187,11 +183,6 @@ public class MainActivity extends AppCompatActivity {
 		});
 		initialSeries();
 
-		test = decrypt("0F0F27418D1CB562F90BB3EA06CA1016");
-		test = "test: " + test + " .";
-
-		showAvaliability.setText(test);
-
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID).setSmallIcon(R.drawable.ic_notification)
 				.setContentTitle("My notification")
 				.setContentText("Much longer text that cannot fit one line...")
@@ -235,9 +226,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	public static String decrypt(String EncryptedMessage){
-		Log.d("AES2", "truoc try");
 		try{
-			Log.d("AES2", "vo try");
 			Cipher _Cipher = Cipher.getInstance("AES");
 
 			byte[] iv = { 1, 2, 3, 4, 5, 6, 6, 5, 4, 3, 2, 1, 7, 7, 7, 7 };
@@ -245,9 +234,7 @@ public class MainActivity extends AppCompatActivity {
 
 			Key SercetKey = new SecretKeySpec(DeKey.getBytes(), "AES");
 			_Cipher.init(Cipher.DECRYPT_MODE, SercetKey, ivspec);
-			Log.d("AES2", "truoc");
 			byte DecodedMessage[] = Base64.decodeBase64(EncryptedMessage.getBytes());
-			Log.d("AES3", "sau");
 
 			return new String(_Cipher.doFinal(DecodedMessage));
 		}
