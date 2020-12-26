@@ -14,7 +14,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class MQTTHelper {
-    final String serverUri = "tcp://13.229.69.47:1883";
+    final String serverUri = "tcp://13.229.80.211:1883";
     final String clientID = "hung";
     String subscriptionTopic = "";
     final String username = "hquocdo";

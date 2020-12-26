@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333"
+    android:background="#ffffff"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -20,14 +20,14 @@
             android:layout_weight="0.1"
             android:gravity="right"
             android:scaleType="fitCenter"
-            android:background="#333333"/>
+            android:background="#ffffff"/>
         <TextView
             android:layout_width="1dp"
             android:layout_height="50dp"
             android:layout_weight="0.8"
             android:gravity="center_vertical|center_horizontal"
             android:text="MONITOR"
-            android:textColor="#ffffffff"
+            android:textColor="#008000"
             android:textSize="22dp"
             android:textStyle="bold" />
         <ImageButton
@@ -37,7 +37,7 @@
             android:layout_weight="0.1"
             android:gravity="left"
             android:scaleType="fitCenter"
-            android:background="#333333"/>
+            android:background="#ffffff"/>
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                     android:background="@drawable/textlines"
                     android:text="Device ID"
                     android:textSize="20dp"
-                    android:textColor="#ffffffff"
+                    android:textColor="#008000"
                     android:textAlignment="center" />
                 <EditText
                     android:id="@+id/mqttID"
@@ -71,7 +71,7 @@
                     android:paddingBottom="8dp"
                     android:background="@drawable/textlines"
                     android:textSize="20dp"
-                    android:textColor="#ffffffff"
+                    android:textColor="#008000"
                     android:textAlignment="center"/>
             </LinearLayout>
             <Button
@@ -83,7 +83,7 @@
                 android:background="@drawable/textlines"
                 android:text="CONNECT"
                 android:textSize="20dp"
-                android:textColor="#ffffffff"
+                android:textColor="#008000"
                 android:textAlignment="center"/>
             <TextView
                 android:id="@+id/Availability"
@@ -94,7 +94,7 @@
                 android:background="@drawable/textlines"
                 android:text="AVAILABILITY"
                 android:textAlignment="center"
-                android:textColor="#ffffffff"
+                android:textColor="#008000"
                 android:textSize="20dp"/>
             <TextView
                 android:layout_width="match_parent"
@@ -116,7 +116,7 @@
                     android:background="@drawable/textlines"
                     android:text="BPM"
                     android:textAlignment="center"
-                    android:textColor="#ffffffff"
+                    android:textColor="#008000"
                     android:textSize="20dp"
                     android:textStyle="bold" />
                 <TextView
@@ -129,7 +129,7 @@
                     android:background="@drawable/textlines"
                     android:text="test"
                     android:textAlignment="center"
-                    android:textColor="#ffffffff"
+                    android:textColor="#008000"
                     android:textSize="20dp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -148,7 +148,7 @@
                     android:background="@drawable/textlines"
                     android:text="SPO2"
                     android:textAlignment="center"
-                    android:textColor="#ffffffff"
+                    android:textColor="#008000"
                     android:textSize="20dp"
                     android:textStyle="bold" />
                 <TextView
@@ -161,7 +161,39 @@
                     android:background="@drawable/textlines"
                     android:text="test"
                     android:textAlignment="center"
-                    android:textColor="#ffffffff"
+                    android:textColor="#008000"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/Temptshow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:background="@drawable/textlines"
+                    android:text="Temperature"
+                    android:textAlignment="center"
+                    android:textColor="#008000"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/testTempt"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:background="@drawable/textlines"
+                    android:text="test"
+                    android:textAlignment="center"
+                    android:textColor="#008000"
                     android:textSize="20dp"
                     android:textStyle="bold" />
             </LinearLayout>
