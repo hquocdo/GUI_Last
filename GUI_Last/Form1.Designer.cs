@@ -33,7 +33,6 @@
             this.timerRenderGraph = new System.Windows.Forms.Timer(this.components);
             this.timerMqttPublish = new System.Windows.Forms.Timer(this.components);
             this.AutoConnect = new System.Windows.Forms.Timer(this.components);
-            this.scottPlotUC3 = new ScottPlot.FormsPlot();
             this.scottPlotUC2 = new ScottPlot.FormsPlot();
             this.scottPlotUC1 = new ScottPlot.FormsPlot();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -68,7 +67,6 @@
             // 
             // timerRenderGraph
             // 
-            this.timerRenderGraph.Interval = 20;
             this.timerRenderGraph.Tick += new System.EventHandler(this.timerRenderGraph_Tick);
             // 
             // timerMqttPublish
@@ -82,26 +80,15 @@
             this.AutoConnect.Interval = 10000;
             this.AutoConnect.Tick += new System.EventHandler(this.AutoConnect_Tick);
             // 
-            // scottPlotUC3
-            // 
-            this.scottPlotUC3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.scottPlotUC3.BackColor = System.Drawing.Color.White;
-            this.scottPlotUC3.Location = new System.Drawing.Point(128, 387);
-            this.scottPlotUC3.Name = "scottPlotUC3";
-            this.scottPlotUC3.Size = new System.Drawing.Size(881, 175);
-            this.scottPlotUC3.TabIndex = 2;
-            // 
             // scottPlotUC2
             // 
             this.scottPlotUC2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.scottPlotUC2.BackColor = System.Drawing.Color.White;
-            this.scottPlotUC2.Location = new System.Drawing.Point(128, 201);
+            this.scottPlotUC2.Location = new System.Drawing.Point(128, 288);
             this.scottPlotUC2.Name = "scottPlotUC2";
-            this.scottPlotUC2.Size = new System.Drawing.Size(881, 180);
+            this.scottPlotUC2.Size = new System.Drawing.Size(881, 274);
             this.scottPlotUC2.TabIndex = 1;
             // 
             // scottPlotUC1
@@ -112,7 +99,7 @@
             this.scottPlotUC1.BackColor = System.Drawing.Color.White;
             this.scottPlotUC1.Location = new System.Drawing.Point(128, 27);
             this.scottPlotUC1.Name = "scottPlotUC1";
-            this.scottPlotUC1.Size = new System.Drawing.Size(881, 168);
+            this.scottPlotUC1.Size = new System.Drawing.Size(881, 255);
             this.scottPlotUC1.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -121,7 +108,6 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.37304F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.62696F));
-            this.tableLayoutPanel1.Controls.Add(this.scottPlotUC3, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.scottPlotUC1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.scottPlotUC2, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.menuStrip1, 0, 0);
@@ -130,12 +116,10 @@
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 32.17189F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34.49477F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.25784F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.74216F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1012, 565);
             this.tableLayoutPanel1.TabIndex = 0;
@@ -273,9 +257,9 @@
             this.panel2.Controls.Add(this.lblSPO2);
             this.panel2.Controls.Add(this.lblBPM);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 201);
+            this.panel2.Location = new System.Drawing.Point(3, 288);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(119, 180);
+            this.panel2.Size = new System.Drawing.Size(119, 274);
             this.panel2.TabIndex = 6;
             // 
             // lblTemp
@@ -285,7 +269,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTemp.AutoSize = true;
             this.lblTemp.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTemp.Location = new System.Drawing.Point(23, 94);
+            this.lblTemp.Location = new System.Drawing.Point(38, 73);
             this.lblTemp.Name = "lblTemp";
             this.lblTemp.Size = new System.Drawing.Size(46, 30);
             this.lblTemp.TabIndex = 1;
@@ -299,7 +283,7 @@
             this.lblSPO2.AutoSize = true;
             this.lblSPO2.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.lblSPO2.ForeColor = System.Drawing.Color.Black;
-            this.lblSPO2.Location = new System.Drawing.Point(23, 64);
+            this.lblSPO2.Location = new System.Drawing.Point(35, 43);
             this.lblSPO2.Name = "lblSPO2";
             this.lblSPO2.Size = new System.Drawing.Size(49, 30);
             this.lblSPO2.TabIndex = 4;
@@ -312,11 +296,11 @@
             this.lblBPM.AutoSize = true;
             this.lblBPM.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.lblBPM.ForeColor = System.Drawing.Color.Black;
-            this.lblBPM.Location = new System.Drawing.Point(9, 28);
+            this.lblBPM.Location = new System.Drawing.Point(22, 13);
             this.lblBPM.Name = "lblBPM";
-            this.lblBPM.Size = new System.Drawing.Size(99, 30);
+            this.lblBPM.Size = new System.Drawing.Size(75, 30);
             this.lblBPM.TabIndex = 3;
-            this.lblBPM.Text = "500 BPM";
+            this.lblBPM.Text = "0 BPM";
             this.lblBPM.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // panel1
@@ -325,7 +309,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(119, 168);
+            this.panel1.Size = new System.Drawing.Size(119, 255);
             this.panel1.TabIndex = 5;
             // 
             // pictureBox1
@@ -335,7 +319,7 @@
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(119, 168);
+            this.pictureBox1.Size = new System.Drawing.Size(119, 255);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -365,7 +349,6 @@
         private System.Windows.Forms.Timer timerRenderGraph;
         private System.Windows.Forms.Timer timerMqttPublish;
         private System.Windows.Forms.Timer AutoConnect;
-        private ScottPlot.FormsPlot scottPlotUC3;
         private ScottPlot.FormsPlot scottPlotUC2;
         private ScottPlot.FormsPlot scottPlotUC1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

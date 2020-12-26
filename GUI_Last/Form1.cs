@@ -11,6 +11,8 @@ using EsploraPulse.Model;
 using LattePanda.Firmata;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace GUI_Last
 {
@@ -19,6 +21,37 @@ namespace GUI_Last
         private ECG ecg = new ECG();
         private bool checkConnect = false;
         MqttClient client = new MqttClient("13.229.80.211");
+        private static string keyStr = "1111111111111111";
+
+        static public String Encrypt(String plaintext , String key)
+        {
+            var plainbytes = Encoding.UTF8.GetBytes(plaintext);
+            return Convert.ToBase64String(Encrypt(plainbytes, GetRijndaelManaged(key)));
+        }
+
+        static private RijndaelManaged GetRijndaelManaged(String secretkey)
+        {
+            var keyBytes = new byte[16];
+            var secretKeyBytes = Encoding.ASCII.GetBytes(secretkey);
+            Array.Copy(secretKeyBytes, keyBytes, Math.Min(keyBytes.Length, secretKeyBytes.Length));
+            return new RijndaelManaged
+            {
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.PKCS7,
+                KeySize = 128,
+                BlockSize = 128,
+                Key = keyBytes,
+                IV = keyBytes
+
+            };
+        }
+
+        static private byte[] Encrypt(byte[] plainBytes, RijndaelManaged rijndaelManaged)
+        {
+            return rijndaelManaged.CreateEncryptor()
+                .TransformFinalBlock(plainBytes, 0, plainBytes.Length);
+        }
+
         public Lattepanda_Ehealth()
         {
             InitializeComponent();
@@ -71,10 +104,10 @@ namespace GUI_Last
             scottPlotUC2.Render();
             
 
-            scottPlotUC3.plt.YLabel("Heart Rate(BPM)");
-            scottPlotUC3.plt.XLabel("Time (Seconds)");
-            scottPlotUC3.plt.Title("Heart Beat Detection");
-            scottPlotUC3.Render();
+            //scottPlotUC3.plt.YLabel("Heart Rate(BPM)");
+            //scottPlotUC3.plt.XLabel("Time (Seconds)");
+            //scottPlotUC3.plt.Title("Heart Beat Detection");
+            //scottPlotUC3.Render();
             
         }
         bool busyRendering = false;
@@ -122,10 +155,11 @@ namespace GUI_Last
 
             if (ecg.beatTimes != null && ecg.beatTimes.Count > 0)
             {
-                scottPlotUC3.plt.Clear();
-                scottPlotUC3.plt.PlotScatter(ecg.beatTimes.ToArray(), ecg.beatRates.ToArray());
-                //scottPlotUC3.plt.AxisAuto();
-                scottPlotUC3.Render();
+                //scottPlotUC3.plt.Clear();
+                //scottPlotUC3.plt.PlotScatter(ecg.beatTimes.ToArray(), ecg.beatRates.ToArray());
+                //Console.WriteLine(ecg.beatRates);
+                ////scottPlotUC3.plt.AxisAuto();
+                //scottPlotUC3.Render();
             }
             busyRendering = false;
         }
@@ -134,9 +168,10 @@ namespace GUI_Last
 
         private void timerMqttPublish_Tick(object sender, EventArgs e)
         {
-            string data = this.ecg.data.BPM + "-" + this.ecg.spo2;
+            double roundedTemp = Math.Round(this.ecg.body_temp, 2);
+            string data = this.ecg.data.BPM + "-" + this.ecg.spo2 + "-" + roundedTemp;
             
-            ushort msgId = client.Publish("mqtt1", Encoding.UTF8.GetBytes(data), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
+            ushort msgId = client.Publish("mqtt1", Encoding.UTF8.GetBytes(Encrypt(data, keyStr)), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
             lblBPM.Text = ecg.data.BPM + " BPM";
             lblSPO2.Text = ecg.spo2 + " %";
             lblTemp.Text = string.Format("{0:0.0}°C", ecg.body_temp);

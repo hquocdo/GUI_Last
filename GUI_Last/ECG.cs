@@ -15,7 +15,7 @@ namespace GUI_Last
         public readonly PulseData data;
         public readonly PulseCalculator controller;
 
-        public int SAMPLERATE = 8600;
+        public int SAMPLERATE = 8000;
         int bufferIndex = 0;
         int PPGIndex = 0;
         int buffersCaptured = 0;
@@ -48,6 +48,8 @@ namespace GUI_Last
         Random r = new Random();
 
         public double body_temp = new double();
+
+        
 
         [DllImport("SPO2_ALGORITHM.dll", CallingConvention = CallingConvention.Cdecl)]
         public extern static void maxim_heart_rate_and_oxygen_saturation(int[] pun_ir_buffer, int n_ir_buffer_length, int[] pun_red_buffer, ref int pn_spo2, ref byte pch_spo2_valid, ref int pn_heart_rate, ref byte pch_hr_valid);
