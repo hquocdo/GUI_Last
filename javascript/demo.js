@@ -2,6 +2,7 @@ document.getElementById("BPM").innerHTML = "BPM";
 document.getElementById("SPO2").innerHTML = "SPO2";
 document.getElementById("temp").innerHTML = "Body Temperature";
 
+
 var dpsBPM = [], dpsSPO2 = [];
 var chartBPM = new CanvasJS.Chart("BPMchartContainer", {
 	title :{
@@ -22,20 +23,19 @@ var chartSPO2 = new CanvasJS.Chart("SPO2chartContainer", {
 	}]
 });
 
-var xVal = 0;
+var xValBPM = 1, xValSPO2 = 1;
 var dataLength = 20; // number of dataPoints visible at any point
 
-var updateChart = function (count, value, array, chart) {
+var updateChart = function (count, xvalue, value, array, chart) {
 
 	count = count || 1;
 
 	for (var j = 0; j < count; j++) {
 		//yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
 		array.push({
-			x: xVal,
+			x: xvalue,
 			y: value
 		});
-		xVal++;
 	}
 
 	if (array.length > dataLength) {
@@ -45,8 +45,8 @@ var updateChart = function (count, value, array, chart) {
 	chart.render();
 };
 
-//updateChart(dataLength);
-//setInterval(function(){updateChart()}, updateInterval);
+updateChart(1, 0, 0, dpsBPM, chartBPM);
+updateChart(1, 0, 0, dpsSPO2, chartSPO2);
 
 function startConnect() {
     // Generate a random client ID
@@ -91,8 +91,10 @@ function onMessageArrived(message) {
     document.getElementById("BPM").innerHTML = result[1];
     document.getElementById("SPO2").innerHTML = result[2];
     document.getElementById("temp").innerHTML = result[3];
-    updateChart(1, parseInt(result[1]), dpsBPM, chartBPM);
-    updateChart(1, parseInt(result[2]), dpsSPO2, chartSPO2);
+    updateChart(1, xValBPM, parseInt(result[1]), dpsBPM, chartBPM);
+    updateChart(1, xValSPO2, parseInt(result[2]), dpsSPO2, chartSPO2);
+    xValBPM++;
+    xValSPO2++;
 }
 
 // Called when the disconnection button is pressed

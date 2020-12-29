@@ -3,8 +3,8 @@
 }
 
 #BPMchartContainer{
-    float: right;
+    float: left;
 }
 #SPO2chartContainer{
-    float: left;
+    float: right;
 }
