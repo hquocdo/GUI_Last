@@ -130,13 +130,14 @@ namespace GUI_Last
             if (useLowpassFilter)
             {
                 scottPlotUC1.plt.Clear();
-                scottPlotUC1.plt.PlotSignal(ecg.GetFilteredValues(ecg.values,ecg.lastPointUpdated), ecg.SAMPLERATE);
+                //scottPlotUC2.plt.PlotSignal(ecg.values, ecg.SAMPLERATE);
+                scottPlotUC1.plt.PlotSignal(ecg.GetFilteredValues(ecg.values, ecg.lastPointUpdated), ecg.SAMPLERATE);
+                
                 scottPlotUC1.Render();
 
                 scottPlotUC2.plt.Clear();
                 scottPlotUC2.plt.PlotSignal(ecg.GetFilteredValues(ecg.ppg_values, ecg.lastPPGUpdated), ecg.SAMPLERATE);
                 scottPlotUC2.Render();
-
             }
             else
             {
@@ -172,6 +173,7 @@ namespace GUI_Last
             string data = this.ecg.data.BPM + "-" + this.ecg.spo2 + "-" + roundedTemp;
             
             ushort msgId = client.Publish("mqtt1", Encoding.UTF8.GetBytes(Encrypt(data, keyStr)), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
+            ushort msgId1 = client.Publish("mqttraw1", Encoding.UTF8.GetBytes(data), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
             lblBPM.Text = ecg.data.BPM + " BPM";
             lblSPO2.Text = ecg.spo2 + " %";
             lblTemp.Text = string.Format("{0:0.0}°C", ecg.body_temp);
@@ -263,7 +265,6 @@ namespace GUI_Last
         {
             timerRenderGraph.Enabled = false;
             timerMqttPublish.Enabled = false;
-
         }
     }
 }

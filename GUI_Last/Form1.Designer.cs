@@ -67,6 +67,7 @@
             // 
             // timerRenderGraph
             // 
+            this.timerRenderGraph.Interval = 10;
             this.timerRenderGraph.Tick += new System.EventHandler(this.timerRenderGraph_Tick);
             // 
             // timerMqttPublish

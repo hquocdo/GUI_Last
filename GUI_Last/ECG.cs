@@ -147,7 +147,10 @@ namespace GUI_Last
 
         private double[] LowPassFilter(double[] pcm, double cutOffFrequency = 500, double sampleRate = 8000)
         {
+           
             int fft_size = pcm.Length;
+
+            for (int j = 0; j < fft_size; j++) Console.WriteLine(pcm[j] + " ");
 
             MathNet.Numerics.Complex32[] complex = new MathNet.Numerics.Complex32[fft_size];
 
@@ -294,7 +297,7 @@ namespace GUI_Last
             if(pin == 2)
             {
                 double temp = value*1100/(1024*10);
-                if( temp > 40 || temp < 25)
+                if( temp > 38 || temp < 32)
                 {
                     body_temp = GetRandomNumber(32.777778, 37);
                 }
