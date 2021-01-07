@@ -27,12 +27,14 @@ namespace GUI_Last
 
         public List<double> beatTimes = new List<double>();
         public List<double> beatRates = new List<double>();
+        public List<string[]> info = new List<string[]>();
 
         Arduino arduino = new Arduino();
 
         public double[] values;
         public double[] ppg_values;
         public double[] times;
+
 
         static int[] redBuffer = new int[100];
         static int[] irBuffer = new int[100];
@@ -314,9 +316,9 @@ namespace GUI_Last
         }
         public string GetCSV()
         {
-            string csv = "beat, time (s), rate (bpm) \n";
-            for (int i = 0; i < beatTimes.Count; i++)
-                csv += $"{i + 1}, {Math.Round(beatTimes[i], 3)},{Math.Round(beatTimes[i], 3)}\n";
+            string csv = ", BPM, SpO2, body_temp  \n";
+            for (int i = 0; i < info.Count; i++)
+                csv += $"{i + 1}," + info[i][0] + ", " + info[i][1] + ", " + info[i][2] + "\n";
             return csv;
         }
         public void checkMQTT(bool checkMQTT)

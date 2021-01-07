@@ -171,13 +171,20 @@ namespace GUI_Last
         {
             double roundedTemp = Math.Round(this.ecg.body_temp, 2);
             string data = this.ecg.data.BPM + "-" + this.ecg.spo2 + "-" + roundedTemp;
-            
+            string[] datanew =
+            {
+                this.ecg.data.BPM.ToString(),
+                this.ecg.spo2.ToString(),
+                roundedTemp.ToString()
+            };
             ushort msgId = client.Publish("mqtt1", Encoding.UTF8.GetBytes(Encrypt(data, keyStr)), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
             ushort msgId1 = client.Publish("mqttraw1", Encoding.UTF8.GetBytes(data), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
             lblBPM.Text = ecg.data.BPM + " BPM";
             lblSPO2.Text = ecg.spo2 + " %";
             lblTemp.Text = string.Format("{0:0.0}°C", ecg.body_temp);
 
+
+            this.ecg.info.Add(datanew);
         }
 
         private void Client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
@@ -232,24 +239,23 @@ namespace GUI_Last
         private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog savefile = new SaveFileDialog();
-            savefile.FileName = "Sound Card ECG.png";
+            savefile.FileName = "ECG.png";
             savefile.Filter = "PNG Files (*.png)|*.png|All files (*.*)|*.*";
             if (savefile.ShowDialog() == DialogResult.OK)
             {
                 string saveFilePath = savefile.FileName;
                 scottPlotUC1.plt.SaveFig(saveFilePath);
-                //scottPlotUC2.plt.SaveFig(saveFilePath);
             }
         }
 
-        private void saveCSVToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog savefile = new SaveFileDialog();
-            savefile.FileName = "Sound Card ECG.csv";
-            savefile.Filter = "CSV Files (*.csv)|*.csv|All files (*.*)|*.*";
-            if (savefile.ShowDialog() == DialogResult.OK)
-                System.IO.File.WriteAllText(savefile.FileName, ecg.GetCSV());
-        }
+        //private void saveCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    SaveFileDialog savefile = new SaveFileDialog();
+        //    savefile.FileName = "Sound Card ECG.csv";
+        //    savefile.Filter = "CSV Files (*.csv)|*.csv|All files (*.*)|*.*";
+        //    if (savefile.ShowDialog() == DialogResult.OK)
+        //        System.IO.File.WriteAllText(savefile.FileName, ecg.GetCSV());
+        //}
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -265,6 +271,28 @@ namespace GUI_Last
         {
             timerRenderGraph.Enabled = false;
             timerMqttPublish.Enabled = false;
+        }
+
+        private void savePPGToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog savefile = new SaveFileDialog();
+            savefile.FileName = "PPG.png";
+            savefile.Filter = "PNG Files (*.png)|*.png|All files (*.*)|*.*";
+            if (savefile.ShowDialog() == DialogResult.OK)
+            {
+                string saveFilePath = savefile.FileName;
+                scottPlotUC2.plt.SaveFig(saveFilePath);
+            }
+        }
+
+        private void saveCSVToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            SaveFileDialog savefile = new SaveFileDialog();
+            savefile.FileName = "Sound Card ECG.csv";
+            savefile.Filter = "CSV Files (*.csv)|*.csv|All files (*.*)|*.*";
+            if (savefile.ShowDialog() == DialogResult.OK)
+                System.IO.File.WriteAllText(savefile.FileName, ecg.GetCSV());
+
         }
     }
 }

@@ -49,7 +49,6 @@
             this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.heartbeatDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -58,6 +57,7 @@
             this.lblBPM = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.savePPGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -185,7 +185,8 @@
             this.autoscalemiddleclickToolStripMenuItem,
             this.panLeftToolStripMenuItem,
             this.zoomToolStripMenuItem,
-            this.saveImageToolStripMenuItem});
+            this.saveImageToolStripMenuItem,
+            this.savePPGToolStripMenuItem});
             this.graphToolStripMenuItem.Name = "graphToolStripMenuItem";
             this.graphToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.graphToolStripMenuItem.Text = "Graph";
@@ -222,29 +223,23 @@
             // 
             this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
             this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.saveImageToolStripMenuItem.Text = "Save Image";
+            this.saveImageToolStripMenuItem.Text = "Save ECG";
             this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
             // 
             // heartbeatDetectionToolStripMenuItem
             // 
             this.heartbeatDetectionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clearToolStripMenuItem,
             this.saveCSVToolStripMenuItem});
             this.heartbeatDetectionToolStripMenuItem.Name = "heartbeatDetectionToolStripMenuItem";
             this.heartbeatDetectionToolStripMenuItem.Size = new System.Drawing.Size(125, 20);
             this.heartbeatDetectionToolStripMenuItem.Text = "Heartbeat Detection";
             // 
-            // clearToolStripMenuItem
-            // 
-            this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
-            this.clearToolStripMenuItem.Text = "Clear";
-            // 
             // saveCSVToolStripMenuItem
             // 
             this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
-            this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveCSVToolStripMenuItem.Text = "Save CSV";
+            this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.saveCSVToolStripMenuItem_Click_1);
             // 
             // helpToolStripMenuItem
             // 
@@ -325,6 +320,13 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // savePPGToolStripMenuItem
+            // 
+            this.savePPGToolStripMenuItem.Name = "savePPGToolStripMenuItem";
+            this.savePPGToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.savePPGToolStripMenuItem.Text = "Save PPG";
+            this.savePPGToolStripMenuItem.Click += new System.EventHandler(this.savePPGToolStripMenuItem_Click);
+            // 
             // Lattepanda_Ehealth
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -368,13 +370,13 @@
         private System.Windows.Forms.ToolStripMenuItem panLeftToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveImageToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveCSVToolStripMenuItem;
         private System.Windows.Forms.Label lblTemp;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem controlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem savePPGToolStripMenuItem;
     }
 }
 
