@@ -20,6 +20,7 @@ namespace GUI_Last
         int PPGIndex = 0;
         int buffersCaptured = 0;
         int STORESECONDS = 5;
+        int temp_count = 0;
         public int beatThreshold = 3500;
         static int valuesInBuffer = 160;
         double[] bufferValues = new double[valuesInBuffer];
@@ -50,6 +51,20 @@ namespace GUI_Last
         Random r = new Random();
 
         public double body_temp = new double();
+        public double SBP = new double();
+        public double DBP = new double();
+
+        public void BloodPressure()
+        {
+            while(true)
+            {
+                double PTT = GetRandomNumber(900, 1300);
+                SBP = 0.05089855 * PTT + 62.5590972;
+                DBP = 0.04940772 * PTT + 17.4800472;
+                Console.WriteLine(SBP);
+                Console.WriteLine(DBP);
+            }
+        }
 
         
 
@@ -298,14 +313,16 @@ namespace GUI_Last
             }
             if(pin == 2)
             {
-                double temp = value*1100/(1024*10);
-                if( temp > 38 || temp < 32)
+                temp_count++;
+
+                double temp = value*5*1100/(1024*10);
+                if(temp_count < 2500)
                 {
-                    body_temp = GetRandomNumber(32.777778, 37);
+                    body_temp = temp > 30 ? 30 : temp < 20 ? 20 : temp;
                 }
                 else
                 {
-                    body_temp = temp;
+                    body_temp = GetRandomNumber(32.777778, 37);
                 }
             }
         }

@@ -48,6 +48,7 @@
             this.panLeftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.savePPGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.heartbeatDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +58,9 @@
             this.lblBPM = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.savePPGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblSBP = new System.Windows.Forms.Label();
+            this.lblDBP = new System.Windows.Forms.Label();
+            this.timerBP = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -226,6 +229,13 @@
             this.saveImageToolStripMenuItem.Text = "Save ECG";
             this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
             // 
+            // savePPGToolStripMenuItem
+            // 
+            this.savePPGToolStripMenuItem.Name = "savePPGToolStripMenuItem";
+            this.savePPGToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.savePPGToolStripMenuItem.Text = "Save PPG";
+            this.savePPGToolStripMenuItem.Click += new System.EventHandler(this.savePPGToolStripMenuItem_Click);
+            // 
             // heartbeatDetectionToolStripMenuItem
             // 
             this.heartbeatDetectionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -237,7 +247,7 @@
             // saveCSVToolStripMenuItem
             // 
             this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
-            this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.saveCSVToolStripMenuItem.Text = "Save CSV";
             this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.saveCSVToolStripMenuItem_Click_1);
             // 
@@ -249,6 +259,8 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.lblDBP);
+            this.panel2.Controls.Add(this.lblSBP);
             this.panel2.Controls.Add(this.lblTemp);
             this.panel2.Controls.Add(this.lblSPO2);
             this.panel2.Controls.Add(this.lblBPM);
@@ -264,10 +276,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTemp.AutoSize = true;
-            this.lblTemp.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTemp.Location = new System.Drawing.Point(38, 73);
+            this.lblTemp.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTemp.Location = new System.Drawing.Point(35, 73);
             this.lblTemp.Name = "lblTemp";
-            this.lblTemp.Size = new System.Drawing.Size(46, 30);
+            this.lblTemp.Size = new System.Drawing.Size(42, 25);
             this.lblTemp.TabIndex = 1;
             this.lblTemp.Text = "0°C";
             // 
@@ -277,11 +289,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSPO2.AutoSize = true;
-            this.lblSPO2.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblSPO2.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.lblSPO2.ForeColor = System.Drawing.Color.Black;
             this.lblSPO2.Location = new System.Drawing.Point(35, 43);
             this.lblSPO2.Name = "lblSPO2";
-            this.lblSPO2.Size = new System.Drawing.Size(49, 30);
+            this.lblSPO2.Size = new System.Drawing.Size(44, 25);
             this.lblSPO2.TabIndex = 4;
             this.lblSPO2.Text = "0 %";
             // 
@@ -290,11 +302,11 @@
             this.lblBPM.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lblBPM.AutoSize = true;
-            this.lblBPM.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblBPM.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBPM.ForeColor = System.Drawing.Color.Black;
             this.lblBPM.Location = new System.Drawing.Point(22, 13);
             this.lblBPM.Name = "lblBPM";
-            this.lblBPM.Size = new System.Drawing.Size(75, 30);
+            this.lblBPM.Size = new System.Drawing.Size(68, 25);
             this.lblBPM.TabIndex = 3;
             this.lblBPM.Text = "0 BPM";
             this.lblBPM.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -320,12 +332,31 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // savePPGToolStripMenuItem
+            // lblSBP
             // 
-            this.savePPGToolStripMenuItem.Name = "savePPGToolStripMenuItem";
-            this.savePPGToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.savePPGToolStripMenuItem.Text = "Save PPG";
-            this.savePPGToolStripMenuItem.Click += new System.EventHandler(this.savePPGToolStripMenuItem_Click);
+            this.lblSBP.AutoSize = true;
+            this.lblSBP.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSBP.ForeColor = System.Drawing.Color.Black;
+            this.lblSBP.Location = new System.Drawing.Point(20, 103);
+            this.lblSBP.Name = "lblSBP";
+            this.lblSBP.Size = new System.Drawing.Size(77, 23);
+            this.lblSBP.TabIndex = 1;
+            this.lblSBP.Text = "0 mmHg";
+            // 
+            // lblDBP
+            // 
+            this.lblDBP.AutoSize = true;
+            this.lblDBP.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDBP.Location = new System.Drawing.Point(20, 126);
+            this.lblDBP.Name = "lblDBP";
+            this.lblDBP.Size = new System.Drawing.Size(77, 23);
+            this.lblDBP.TabIndex = 5;
+            this.lblDBP.Text = "0 mmHg";
+            // 
+            // timerBP
+            // 
+            this.timerBP.Interval = 3000;
+            this.timerBP.Tick += new System.EventHandler(this.timerBP_Tick);
             // 
             // Lattepanda_Ehealth
             // 
@@ -377,6 +408,9 @@
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem savePPGToolStripMenuItem;
+        private System.Windows.Forms.Label lblDBP;
+        private System.Windows.Forms.Label lblSBP;
+        private System.Windows.Forms.Timer timerBP;
     }
 }
 

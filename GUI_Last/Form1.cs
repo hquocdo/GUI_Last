@@ -22,6 +22,8 @@ namespace GUI_Last
         private bool checkConnect = false;
         MqttClient client = new MqttClient("13.229.80.211");
         private static string keyStr = "1111111111111111";
+        public double SBP = new double();
+        public double DBP = new double();
 
         static public String Encrypt(String plaintext , String key)
         {
@@ -85,6 +87,7 @@ namespace GUI_Last
             
             timerRenderGraph.Enabled = true;
             timerMqttPublish.Enabled = true;
+            timerBP.Enabled = true;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -182,6 +185,9 @@ namespace GUI_Last
             lblBPM.Text = ecg.data.BPM + " BPM";
             lblSPO2.Text = ecg.spo2 + " %";
             lblTemp.Text = string.Format("{0:0.0}°C", ecg.body_temp);
+           
+            //lblSBP.Text = string.Format("{0:0.0} mmHg", ecg.SBP);
+            //lblDBP.Text = string.Format("{0:0.0} mmHg", ecg.DBP);
 
 
             this.ecg.info.Add(datanew);
@@ -257,6 +263,12 @@ namespace GUI_Last
         //        System.IO.File.WriteAllText(savefile.FileName, ecg.GetCSV());
         //}
 
+        public static double GetRandomNumber(double minimum, double maximum)
+        {
+            Random random = new Random();
+            return random.NextDouble() * (maximum - minimum) + minimum;
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
@@ -271,6 +283,7 @@ namespace GUI_Last
         {
             timerRenderGraph.Enabled = false;
             timerMqttPublish.Enabled = false;
+            timerBP.Enabled = false;
         }
 
         private void savePPGToolStripMenuItem_Click(object sender, EventArgs e)
@@ -293,6 +306,16 @@ namespace GUI_Last
             if (savefile.ShowDialog() == DialogResult.OK)
                 System.IO.File.WriteAllText(savefile.FileName, ecg.GetCSV());
 
+        }
+
+        private void timerBP_Tick(object sender, EventArgs e)
+        {
+            double PTT = GetRandomNumber(900, 1300);
+            SBP = 0.05089855 * PTT + 62.5590972;
+            DBP = 0.04940772 * PTT + 17.4800472;
+
+            lblSBP.Text = string.Format("{0:0.0} mmHg", SBP);
+            lblDBP.Text = string.Format("{0:0.0} mmHg", DBP);
         }
     }
 }
